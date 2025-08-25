@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -18,12 +19,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('detailsproduct/{id}', [ProductController::class, 'show']);
     Route::get('getallproduct', [ProductController::class, 'index']);
     ////////////////////////////
-    
-    Route::post('add/cart/{product}',[CartController::class,'addtocart']);
 
-    Route::delete('delete/cart/{product}',[CartController::class,'deletefromcart']);
+    Route::post('add/cart/{product}', [CartController::class, 'addtocart']);
 
-    Route::get('show/cart',[CartController::class,'showcartwithtotalprice']);
+    Route::delete('delete/cart/{product}', [CartController::class, 'deletefromcart']);
+
+    Route::get('show/cart', [CartController::class, 'showcartwithtotalprice']);
+
+    Route::post('add/order', [OrderController::class, 'createOrder']);
 });
 
 Route::post('register', [UserController::class, 'register']);
