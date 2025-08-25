@@ -20,6 +20,10 @@ Route::middleware('auth:sanctum')->group(function () {
     ////////////////////////////
     
     Route::post('add/cart/{product}',[CartController::class,'addtocart']);
+
+    Route::delete('delete/cart/{product}',[CartController::class,'deletefromcart']);
+
+    Route::get('show/cart',[CartController::class,'showcartwithtotalprice']);
 });
 
 Route::post('register', [UserController::class, 'register']);
