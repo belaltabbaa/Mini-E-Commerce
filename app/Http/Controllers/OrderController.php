@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\OrderResource;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -10,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    public function createOrder(Request $request)
+    public function createOrder()
     {
         $carts = Cart::with('product')->where('user_id', Auth::user()->id)->get();
         if ($carts->isEmpty()) {
@@ -37,9 +38,23 @@ class OrderController extends Controller
         return response()->json(
             [
                 'message' => 'Order created successfully',
-                'order' => $order->load('items.product'), // جلب المنتجات التابعة للطلب
+                'order' => $order->load('items.product'),
             ],
             201
         );
+    }
+    public function showorders()
+    {
+        $orders = Order::where('user_id', Auth::user()->id)->get();
+        if ($orders->isEmpty()) {
+            return response()->json(['message' => 'orders not found'], 400);
+        } else {
+            return OrderResource::collection($orders);
+        }
+    }
+    public function showDetailsOrder($id)
+    {
+        $order = Order::where('user_id', Auth::user()->id)->findOrFail($id);
+        return response()->json(['order' => $order]);
     }
 }

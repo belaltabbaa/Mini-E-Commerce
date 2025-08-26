@@ -22,7 +22,7 @@ class ProductFactory extends Factory
     {
         $name = $this->faker->words(2, true);
         return [
-            'category_id' => Category::inRandomOrder()->first()->id ?? Category::factory(),
+            'category_id' => Category::inRandomOrder()->first()->id ?? Category::factory()->create()->id,
             'name' => $name,
             'slug' => Str::slug($name) . '-' . Str::random(5),
             'desecription' => $this->faker->sentence(10),

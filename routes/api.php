@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
@@ -27,6 +28,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('show/cart', [CartController::class, 'showcartwithtotalprice']);
 
     Route::post('add/order', [OrderController::class, 'createOrder']);
+
+    Route::get('show/orders', [OrderController::class, 'showorders']);
+
+    Route::get('showdetails/order/{id}', [OrderController::class, 'showDetailsOrder']);
+
+    Route::apiResource('categories', CategoryController::class);
 });
 
 Route::post('register', [UserController::class, 'register']);
